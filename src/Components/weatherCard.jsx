@@ -3,38 +3,61 @@
 // text-red-500: Sets the text color to a shade of red if the temperature is above 25.
 
 import React from "react";
+import * as moment from 'moment';
 
-const WeatherCard =({ weatherData, unit })=> {
-  let fakeTemp = 200;
-    let fakeHum = "Humid"
-  return (
-    <div className="grid gap-4 justify-items-center p-4 w-full">
-      <div className="text-center bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-2">
-          Current Weather in{" "}
-          <p className="text-indigo-500 uppercase">ahmedabad</p>{" "}
-          {weatherData?.name}
-        </h2>
-        <p
-          className={`${
-            fakeTemp < 0
-              ? "text-indigo-500"
-              : fakeTemp <= 25
-              ? "text-green-600"
-              : "text-indigo-500"
-          }`}
-        >
-          Temperature: {weatherData?.main?.temp} {fakeTemp} &deg;{unit === "metric" ? "C" : "F"}
-        </p>
-        <p className="text-gray-600">
-          Weather: {weatherData?.weather[0]?.description} {fakeHum}
-        </p>
-        <p className="text-gray-600">
-          Wind Speed: {weatherData?.wind?.speed} m/s
-        </p>
-      </div>
+const WeatherCard = ({ weatherData, unit, errorMessage }) => {
+   return (
+      <div className="flex items-center justify-center mt-12">
+       {errorMessage !== "" && (<div className="flex flex-col bg-white rounded p-4 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="font-bold text-xl">{weatherData?.name}</div>
+        <div className="text-sm text-gray-500">{moment().format('MMMM Do YYYY')}</div>
+        <div className="flex flex-row items-center justify-center mt-6">
+          <div className="font-medium text-5xl">{unit === "metric" ? Math.round(weatherData?.main?.temp) :  Math.round(weatherData?.main?.temp * (9 / 5) + 32)} &deg;{unit === "metric" ? "C" : "F"}</div>
+        </div>
+        <div className="flex flex-row justify-between mt-6">
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Wind</div>
+            <div className="text-sm text-gray-800 font-medium">{weatherData?.wind?.speed} m/s</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Humidity</div>
+            <div className="text-sm text-gray-800 font-medium">{weatherData?.main?.humidity}%</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Visibility</div>
+            <div className="text-sm text-gray-800 font-medium">{Math.round(weatherData?.visibility / 100) / 10} km</div>
+          </div>
+        </div>
+      </div>)}
+
+
+      {errorMessage === "" && (
+      <div className="flex flex-col  bg-white rounded p-4 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="font-bold justify-center flex text-4xl">{weatherData?.name}</div>
+        <div className=" justify-center flex text-sm text-gray-500">{moment().format('MMMM Do YYYY')}</div>
+        <div className="flex flex-row items-center justify-center mt-6">
+          <div className="font-medium text-5xl">{Math.round(weatherData?.main?.temp)} &deg;{unit === "metric" ? "C" : "F"}</div>
+        </div>
+        <div className="flex flex-row justify-between mt-6">
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Wind</div>
+            <div className="text-sm text-gray-800 font-medium">{weatherData?.wind?.speed} m/s</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Humidity</div>
+            <div className="text-sm text-gray-800 font-medium">{weatherData?.main?.humidity}%</div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="font-medium text-sm">Visibility</div>
+            <div className="text-sm text-gray-800 font-medium">{Math.round(weatherData?.visibility / 100) / 10} km</div>
+          </div>
+        </div>
+      </div>)}
+
+
     </div>
-  );
-}
+    
+   );
+};
 
 export default WeatherCard;
