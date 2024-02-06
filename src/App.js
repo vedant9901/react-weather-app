@@ -102,7 +102,7 @@ function App() {
     {/* Container for the Weather App */}
     <div className="sm:flex sm:justify-center md:flex md:justify-center lg:flex lg:justify-center xl:flex xl:justify-center">
        {/* Title for the Weather App */}
-       <h1 className="text-3xl font-bold mb-4 text-yellow-50">Weather App</h1>
+       <h1 className="text-3xl font-bold mb-4 text-black">Weather App</h1>
     </div>
     {/* Container for the main content */}
     <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-md p-5">
